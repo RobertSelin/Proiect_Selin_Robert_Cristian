@@ -1,0 +1,88 @@
+﻿@page
+@model Proiect_Selin_Robert_Cristian.Pages.SportsFields.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create" class="btn btn-dark">Create New</a>
+</p>
+
+<form asp-page="./Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Cauta dupa Terenul de sport / Baza sportiva 
+        </p>
+        <input type="text" name="SearchString" value="@Model.CurrentFilter"/>
+        <input type="submit" value="Search" class="btn btn-primary"/> |
+        <a asp-page="./Index">Inapoi la lista completa</a>
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <a asp-page="./Index" asp-route-sortOder="@Model.SportsFieldSort">
+                    @Html.DisplayNameFor(model => model.SportsField[0].Field_Name)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SportsField[0].Price_Per_Hour)
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@Model.SportsFacilitySort">
+                    @Html.DisplayNameFor(model => model.SportsField[0].SportsFacility.SportsFacilityName)
+                </a>
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SportsField[0].Surface)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SportsField[0].SportsFieldCategories)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.SportsFieldD.SportsFields) {
+
+            string selectedRow = "";
+            if (item.ID == Model.SportsFieldID)
+            {
+                selectedRow = "table-success";
+            }
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Field_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price_Per_Hour)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SportsFacility.SportsFacilityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Surface)
+            </td>
+            <td>
+                @{
+                    foreach(var category in item.SportsFieldCategories)
+                    {
+                        @category.Category.CategoryName <br/>
+                    }
+                }
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,76 @@
+﻿@page
+@model Proiect_Selin_Robert_Cristian.Pages.SportsFields.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>SportsField</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SportsField.Field_Name" class="control-label"></label>
+                <input asp-for="SportsField.Field_Name" class="form-control" />
+                <span asp-validation-for="SportsField.Field_Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SportsField.Price_Per_Hour" class="control-label"></label>
+                <input asp-for="SportsField.Price_Per_Hour" class="form-control" />
+                <span asp-validation-for="SportsField.Price_Per_Hour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SportsField.SportsFacilityID" class="control-label">Baza Sportiva</label>
+                <select asp-for="SportsField.SportsFacilityID" class="form-control" asp-items="ViewBag.SportsFacilityID"></select>
+                <span asp-validation-for="SportsField.SportsFacilityID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SportsField.Surface" class="control-label"></label>
+                <input asp-for="SportsField.Surface" class="form-control" />
+                <span asp-validation-for="SportsField.Surface" class="text-danger"></span>
+            </div>
+
+             <div class="form-group">
+                <div class="table">
+                    <table>
+                        <tr>
+                            @{
+                                int cnt = 0;
+                                foreach (var cat in Model.AssignedCategoryDataList)
+                                {
+                                    if (cnt++ % 3 == 0)
+                                    {
+                                        @:<tr></tr>
+                                    }
+                                    @:<td>
+                                        <input type="checkbox"
+                                               name="selectedCategories"
+                                               value="@cat.CategoryID"
+                                               @(Html.Raw(cat.Assigned ? "checked =\"checked\"" : ""))/>
+                                               @cat.Name
+                                    @:</td>
+                                }
+                                @:<tr>
+                             }
+                    </table>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

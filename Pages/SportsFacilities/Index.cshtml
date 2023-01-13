@@ -1,0 +1,94 @@
+﻿@page "{id:int?}"
+@model Proiect_Selin_Robert_Cristian.Pages.SportsFacilities.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SportsFacility[0].SportsFacilityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SportsFacility[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SportsFacility[0].Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SportsFacility[0].Adress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SportsFacility[0].City.CityName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.SportsFacilityData.SportsFacilities) {
+            string selectedRow = "";
+            if (item.ID == Model.SportsFacilityID)
+            {
+                selectedRow = "table-success";
+            }
+            <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.SportsFacilityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Phone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.CityName)
+            </td>
+            <td>
+                <a asp-page="./Index" asp-route-id="@item.ID">Select</a>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@if (Model.SportsFacilityData.SportsFields != null)
+{
+    <h3>Terenuri ce apartin de baza sportiva selectata:</h3>
+    <table class="table">
+
+        @foreach(var item in Model.SportsFacilityData.SportsFacilities)
+        {
+            string selectedRow = "";
+            if (item.ID == Model.SportsFacilityID)
+            {
+                selectedRow = "table-success";
+            }
+
+            <tr class="@selectedRow">
+                <td>
+                    @{
+                        foreach(var b in item.SportsFields)
+                        {
+                                @b.Field_Name @: : @b.Surface - @b.Price_Per_Hour
+                                <br/>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </table>
+}

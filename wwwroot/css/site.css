@@ -16,3 +16,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+img-back {
+    background-image: url(../Images/courts.jpg);
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
